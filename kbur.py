@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
 Created on 23.01.2019
 
@@ -14,34 +15,19 @@ ser = serial.Serial('/dev/ttyUSB0', 38400, timeout=1)
 #     line = ser.readline()   # read a '\n' terminated line
 
 def command(cmd):
-    print(cmd + ' :>')
-    ser.write((cmd + '\n').encode('utf-8'))
-    print((cmd + '\n').encode('utf-8'))
-#    ser.write('\n')
-    print(ser.readline())
-
-def test():
+    print(cmd + ' -> ', end='')
     #ser.reset_input_buffer()
-    for x in range(0, 5): 
-        cmd = 'get all on 3'
-        print(cmd + '  >')
-        ser.write(cmd.encode('utf-8'))
-        ser.write(b'\n')
-        print(ser.readline())
-        time.sleep(1)
-        
-        #ser.reset_input_buffer()
-        cmd = 'get all on 3\n'
-        print(cmd + '  >')
-        ser.write(cmd.encode('utf-8'))
-        print(ser.readline())
-        time.sleep(1)
-   
+    ser.write((cmd + '\n').encode('utf-8'))
+    #print(ser.readline().decode('utf-8'))
+    print(ser.readline())
 
 
 if __name__ == '__main__':
     command('hello')
-    command('get all on 3')
-    command('set all 0101 on 3')
-    command('set out 1 hi on 3')
+    time.sleep(1)
+    for i in range(3):
+        command('set all 1100 on 3')
+        time.sleep(1)
+        command('set all 0011 on 3')
+        time.sleep(1)
     pass
